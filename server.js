@@ -24,7 +24,7 @@ if (!isProduction) {
   vite = await createServer({
     server: { middlewareMode: true },
     appType: 'custom',
-    base,
+    base
   })
   app.use(vite.middlewares)
 } else {
@@ -33,6 +33,11 @@ if (!isProduction) {
   app.use(compression())
   app.use(base, sirv('./dist/client', { extensions: [] }))
 }
+
+app.post('/chapters/new', (req, res) => {
+  console.log(req);
+  res.json({ message: `Received data` })
+})
 
 // Serve HTML
 app.use('*', async (req, res) => {
